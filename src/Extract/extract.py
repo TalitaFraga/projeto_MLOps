@@ -15,19 +15,15 @@ class GenZExtract:
     def extract(self) -> Path:
         self.raw_dir.mkdir(parents=True, exist_ok=True)
 
-        print("Baixando dataset do Kaggle...")
         download_dir = Path(kagglehub.dataset_download(self.dataset_id))
 
         csv_files = list(download_dir.rglob("*.csv"))
-        if not csv_files:
-            raise FileNotFoundError("Nenhum arquivo CSV encontrado no dataset baixado.")
 
         csv_origem = csv_files[0]
         csv_destino = self.raw_dir / csv_origem.name
 
         shutil.copy(csv_origem, csv_destino)
 
-        print(f"Arquivo salvo em: {csv_destino}")
         return csv_destino
 
 

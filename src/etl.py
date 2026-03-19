@@ -7,15 +7,15 @@ from Load.load import GenZLoad
 
 def main():
     extractor = GenZExtract()
-    #transformer = GenZTransform()
-    #loader = GenZLoad("data/processed/gen_z.csv")
+    transformer = GenZTransform()
+    loader = GenZLoad()
 
     caminho_csv = extractor.extract()
-    #df_raw = pd.read_csv(caminho_csv)
-    #df_processed = transformer.transform(df_raw)
-    #loader.load(df_processed)
+    df_raw = pd.read_csv(caminho_csv)
+    df_processed = transformer.transform(df_raw)
+    loader.load(df_processed)
 
-    print("Pipeline executado com sucesso.")
+    print("Pipeline finalizada.")
 
 
 if __name__ == "__main__":

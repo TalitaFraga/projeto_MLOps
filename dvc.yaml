@@ -1,0 +1,10 @@
+stages:
+  etl:
+    cmd: python src/etl.py
+    deps:
+      - src/etl.py
+      - src/Extract/extract.py
+      - src/Transform/transform.py
+      - src/Load/load.py
+    outs:
+      - data/processed/processed_genz_mental_wellness.csv

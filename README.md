@@ -15,10 +15,6 @@ Com o ambiente criado, ative a venv. No Windows PowerShell, use:
 
 `.\.venv\Scripts\Activate`
 
-no Prompt de Comando, use:
-
-`.venv\Scripts\activate.bat`
-
 e no Linux ou macOS, use 
 
 `source .venv/bin/activate`

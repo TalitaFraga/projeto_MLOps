@@ -1,22 +1,21 @@
 # Como executar o projeto
 
-Para executar este projeto, primeiro clone o repositório com o comando 
-`git clone <URL_DO_REPOSITORIO>` 
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd <NOME_DA_PASTA>
+python -m venv .venv
+```
 
-e em seguida acesse a pasta do projeto com 
+No Windows PowerShell:
 
-`cd <NOME_DA_PASTA>` 
+```bash
+.\.venv\Scripts\Activate
+pip install -r requirements.txt
+```
 
-Depois, crie um ambiente virtual com 
+No Linux / macOS:
 
-`python -m venv .venv`
-
-Com o ambiente criado, ative a venv. No Windows PowerShell, use:
-
-`.\.venv\Scripts\Activate`
-
-e no Linux ou macOS, use 
-
-`source .venv/bin/activate`
-
-Por fim, instale as dependências do projeto com o comando `pip install -r requirements.txt`.
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+```

@@ -2,3 +2,4 @@
 /data/raw/genz_mental_wellness_synthetic_dataset.csv
 logs/
 models/
+.env

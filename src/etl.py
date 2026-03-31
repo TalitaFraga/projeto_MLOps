@@ -13,9 +13,9 @@ def main():
     caminho_csv = extractor.extract()
     df_raw = pd.read_csv(caminho_csv)
     df_processed = transformer.transform(df_raw)
-    loader.load(df_processed)
+    caminho_saida = loader.load(df_processed)
 
-    print("Pipeline finalizada.")
+    print(f"Pipeline finalizada. Arquivo salvo em: {caminho_saida}")
 
 
 if __name__ == "__main__":

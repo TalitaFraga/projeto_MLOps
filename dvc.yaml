@@ -1,10 +1,40 @@
 stages:
   etl:
-    cmd: python src/etl.py
+    cmd: python -m src.etl
     deps:
+      - src/config.py
       - src/etl.py
       - src/Extract/extract.py
       - src/Transform/transform.py
       - src/Load/load.py
+    params:
+      - dataset.kaggle_dataset_id
+      - paths.raw_data_dir
+      - paths.raw_data_path
+      - paths.processed_data_path
+      - transform.categorical_cols
+      - transform.drop_columns
     outs:
-      - data/processed/processed_genz_mental_wellness.csv
+      - data/raw/genz_mental_wellness_synthetic_dataset.csv
+      - data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+
+  train:
+    cmd: python -m src.Train.train
+    deps:
+      - src/config.py
+      - src/Train/preprocess.py
+      - src/Train/train.py
+      - data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+    params:
+      - training.target_column
+      - training.test_size
+      - training.random_state
+      - model.random_forest
+      - artifacts.model_dir
+      - artifacts.model_filename
+      - artifacts.metrics_dir
+      - artifacts.metrics_filename
+    outs:
+      - models/random_forest_model.pkl
+    metrics:
+      - metrics/RF_results.json

@@ -1,0 +1,32 @@
+dataset:
+  kaggle_dataset_id: hammadansari7/gen-z-mental-wellness-and-digital-lifestyle-patterns
+
+paths:
+  raw_data_dir: data/raw
+  raw_data_path: data/raw/genz_mental_wellness_synthetic_dataset.csv
+  processed_data_path: data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+
+transform:
+  categorical_cols:
+    - Gender
+    - Student_Working_Status
+    - Content_Type_Preference
+  drop_columns:
+    - Country
+
+training:
+  target_column: Burnout_Risk
+  test_size: 0.3
+  random_state: 42
+
+model:
+  random_forest:
+    n_estimators: 100
+    random_state: 42
+    n_jobs: -1
+
+artifacts:
+  model_dir: models
+  model_filename: random_forest_model.pkl
+  metrics_dir: metrics
+  metrics_filename: RF_results.json

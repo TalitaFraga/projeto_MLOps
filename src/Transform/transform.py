@@ -1,20 +1,12 @@
-from pathlib import Path
-import os
 import pandas as pd
-from dotenv import load_dotenv
 
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-load_dotenv(BASE_DIR / ".env")
+from src.config import get_param
 
 
 class GenZTransform:
     def __init__(self):
-        categorical_cols = os.getenv("CATEGORICAL_COLS", "")
-        drop_columns = os.getenv("DROP_COLUMNS", "")
-
-        self.categorical_cols = [col.strip() for col in categorical_cols.split(",") if col.strip()]
-        self.drop_columns = [col.strip() for col in drop_columns.split(",") if col.strip()]
+        self.categorical_cols = get_param("transform", "categorical_cols", default=[])
+        self.drop_columns = get_param("transform", "drop_columns", default=[])
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()

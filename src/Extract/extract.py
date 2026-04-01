@@ -1,28 +1,33 @@
 from pathlib import Path
 import shutil
 import kagglehub
-import os
 
-from dotenv import load_dotenv
-
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-load_dotenv(BASE_DIR / ".env")
+from src.config import BASE_DIR, get_param
 
 
 class GenZExtract:
-    def __init__(self, dataset_id: str | None = None):
-        self.project_root = Path(__file__).resolve().parents[2]
+    def __init__(
+        self,
+        dataset_id: str | None = None,
+        raw_dir: str | None = None,
+        raw_data_path: str | None = None,
+    ):
+        self.project_root = BASE_DIR
 
-        self.dataset_id = dataset_id or os.getenv("KAGGLE_DATASET_ID")
-        self.raw_dir = self.project_root / os.getenv("RAW_DATA_DIR")
-        self.raw_data_path = self.project_root / os.getenv("RAW_DATA_PATH")
+        self.dataset_id = dataset_id or get_param("dataset", "kaggle_dataset_id")
+        self.raw_dir = self.project_root / (raw_dir or get_param("paths", "raw_data_dir"))
+        self.raw_data_path = self.project_root / (
+            raw_data_path or get_param("paths", "raw_data_path")
+        )
 
     def extract(self) -> Path:
         self.raw_dir.mkdir(parents=True, exist_ok=True)
 
         download_dir = Path(kagglehub.dataset_download(self.dataset_id))
         csv_files = list(download_dir.rglob("*.csv"))
+
+        if not csv_files:
+            raise FileNotFoundError("Nenhum arquivo CSV foi encontrado no dataset baixado.")
 
         csv_origem = csv_files[0]
         csv_destino = self.raw_data_path

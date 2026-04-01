@@ -1,15 +1,10 @@
 from pathlib import Path
-import os
 
 import pandas as pd
-from dotenv import load_dotenv
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-load_dotenv(BASE_DIR / ".env")
-DATA_PATH = BASE_DIR / os.getenv("PROCESSED_DATA_PATH")
+from src.config import BASE_DIR, get_param
 
 
 def prepare_data(
@@ -17,12 +12,16 @@ def prepare_data(
     test_size: float | None = None,
     random_state: int | None = None,
 ):
-    target_column = target_column or os.getenv("TARGET_COLUMN")
-    test_size = test_size if test_size is not None else float(os.getenv("TEST_SIZE"))
-    random_state = random_state if random_state is not None else int(os.getenv("RANDOM_STATE"))
+    data_path = BASE_DIR / get_param("paths", "processed_data_path")
+
+    target_column = target_column or get_param("training", "target_column")
+    test_size = test_size if test_size is not None else get_param("training", "test_size")
+    random_state = (
+        random_state if random_state is not None else get_param("training", "random_state")
+    )
 
     print("Loading processed data...")
-    df = pd.read_csv(DATA_PATH)
+    df = pd.read_csv(data_path)
 
     X = df.drop(columns=[target_column])
     y = df[target_column]

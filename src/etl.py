@@ -1,8 +1,8 @@
 import pandas as pd
 
-from Extract.extract import GenZExtract
-from Transform.transform import GenZTransform
-from Load.load import GenZLoad
+from src.Extract.extract import GenZExtract
+from src.Transform.transform import GenZTransform
+from src.Load.load import GenZLoad
 
 
 def main():

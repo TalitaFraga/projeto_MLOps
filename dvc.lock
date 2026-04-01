@@ -1,0 +1,89 @@
+schema: '2.0'
+stages:
+  etl:
+    cmd: python -m src.etl
+    deps:
+    - path: src/Extract/extract.py
+      hash: md5
+      md5: fb09aa934465ab5fb1000c8cd93adf66
+      size: 1298
+    - path: src/Load/load.py
+      hash: md5
+      md5: 16b54b6f038238c05e193926a565246c
+      size: 540
+    - path: src/Transform/transform.py
+      hash: md5
+      md5: f46c8b39b42f66ae7b3650c4a7071cab
+      size: 1204
+    - path: src/config.py
+      hash: md5
+      md5: ec4b4ae0c24813dfd98760ef8817f886
+      size: 580
+    - path: src/etl.py
+      hash: md5
+      md5: 88db4f00fef7eb037004f5c3cf4d5705
+      size: 554
+    params:
+      params.yaml:
+        dataset.kaggle_dataset_id: 
+          hammadansari7/gen-z-mental-wellness-and-digital-lifestyle-patterns
+        paths.processed_data_path: 
+          data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+        paths.raw_data_dir: data/raw
+        paths.raw_data_path: data/raw/genz_mental_wellness_synthetic_dataset.csv
+        transform.categorical_cols:
+        - Gender
+        - Student_Working_Status
+        - Content_Type_Preference
+        transform.drop_columns:
+        - Country
+    outs:
+    - path: data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+      hash: md5
+      md5: 811d7d394e9ee6c3ecc26a3c426f1c6e
+      size: 1101700
+    - path: data/raw/genz_mental_wellness_synthetic_dataset.csv
+      hash: md5
+      md5: 7714f734d36f54fac31555a8cb42a779
+      size: 1184726
+  train:
+    cmd: python -m src.Train.train
+    deps:
+    - path: data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
+      hash: md5
+      md5: 811d7d394e9ee6c3ecc26a3c426f1c6e
+      size: 1101700
+    - path: src/Train/preprocess.py
+      hash: md5
+      md5: bc94fe86079f3b2fd2ef97ec0043b765
+      size: 1302
+    - path: src/Train/train.py
+      hash: md5
+      md5: c36a10df5696d8c651778c228f664140
+      size: 1653
+    - path: src/config.py
+      hash: md5
+      md5: ec4b4ae0c24813dfd98760ef8817f886
+      size: 580
+    params:
+      params.yaml:
+        artifacts.metrics_dir: metrics
+        artifacts.metrics_filename: RF_results.json
+        artifacts.model_dir: models
+        artifacts.model_filename: random_forest_model.pkl
+        model.random_forest:
+          n_estimators: 100
+          random_state: 42
+          n_jobs: -1
+        training.random_state: 42
+        training.target_column: Burnout_Risk
+        training.test_size: 0.3
+    outs:
+    - path: metrics/RF_results.json
+      hash: md5
+      md5: 22d13dc7d2d4c37dd096ef563b24e617
+      size: 102
+    - path: models/random_forest_model.pkl
+      hash: md5
+      md5: 8b9a015df7da8a15b4ce663aabea3dbe
+      size: 2267953

@@ -59,8 +59,8 @@ stages:
       size: 1302
     - path: src/Train/train.py
       hash: md5
-      md5: c36a10df5696d8c651778c228f664140
-      size: 1653
+      md5: ea9796b0f397b2f487c8776f62592d81
+      size: 2727
     - path: src/config.py
       hash: md5
       md5: ec4b4ae0c24813dfd98760ef8817f886

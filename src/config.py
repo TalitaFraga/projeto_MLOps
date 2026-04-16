@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import yaml
 from dotenv import load_dotenv
 
@@ -23,4 +24,13 @@ def get_param(*keys, default=None):
         value = value.get(key)
         if value is None:
             return default
+    return value
+
+
+def get_env(key: str, default=None, required: bool = False):
+    value = os.getenv(key, default)
+
+    if required and (value is None or str(value).strip() == ""):
+        raise ValueError(f"Variável de ambiente obrigatória não encontrada ou vazia: {key}")
+
     return value

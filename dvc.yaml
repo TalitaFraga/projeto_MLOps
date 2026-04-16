@@ -14,6 +14,9 @@ stages:
       - paths.processed_data_path
       - transform.categorical_cols
       - transform.drop_columns
+    outs:
+      - data/raw/genz_mental_wellness_synthetic_dataset.csv
+      - data/processed/processed_genz_mental_wellness_synthetic_dataset.csv
 
   train:
     cmd: python -m src.Train.train

@@ -27,6 +27,9 @@ def prepare_data(
     y = df[target_column]
     print("Features and target separated.")
 
+    feature_names = X.columns.tolist()
+    full_class_distribution = y.value_counts().to_dict()
+
     X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
@@ -36,8 +39,26 @@ def prepare_data(
     )
     print("Train-test split completed.")
 
+    y_train_distribution_before_smote = y_train.value_counts().to_dict()
+    y_test_distribution = y_test.value_counts().to_dict()
+
     smote = SMOTE(random_state=random_state)
     X_train, y_train = smote.fit_resample(X_train, y_train)
     print("SMOTE applied successfully.")
 
-    return X_train, X_test, y_train, y_test
+    y_train_distribution_after_smote = y_train.value_counts().to_dict()
+
+    data_info = {
+        "feature_names": feature_names,
+        "n_features": len(feature_names),
+        "x_train_rows": X_train.shape[0],
+        "x_train_cols": X_train.shape[1],
+        "x_test_rows": X_test.shape[0],
+        "x_test_cols": X_test.shape[1],
+        "full_class_distribution": full_class_distribution,
+        "y_train_distribution_before_smote": y_train_distribution_before_smote,
+        "y_train_distribution_after_smote": y_train_distribution_after_smote,
+        "y_test_distribution": y_test_distribution,
+    }
+
+    return X_train, X_test, y_train, y_test, data_info

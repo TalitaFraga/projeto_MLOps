@@ -34,3 +34,9 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+ou 
+
+```bash
+dvc repro
+```

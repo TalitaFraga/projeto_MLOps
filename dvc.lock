@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/Extract/extract.py
       hash: md5
-      md5: 474f4349b36e6f014bf72d5eb0d94ff6
-      size: 1979
+      md5: e0557f0f8f69b98a50f9324bf815178f
+      size: 2889
     - path: src/Load/load.py
       hash: md5
       md5: 16b54b6f038238c05e193926a565246c
@@ -59,16 +59,18 @@ stages:
       size: 2177
     - path: src/Train/train.py
       hash: md5
-      md5: cd332fdb2e7b1e8a12581c67c08c2cc3
-      size: 5479
+      md5: 510d00c163049d945dedb9f9b31e959a
+      size: 5111
     - path: src/config.py
       hash: md5
       md5: f77e88cf954c67b973b094923d61aacc
       size: 879
     params:
       params.yaml:
-        model.decision_tree:
-          random_state: 42
+        artifacts.metrics_dir: metrics
+        artifacts.metrics_filename: RF_results.json
+        artifacts.model_dir: models
+        artifacts.model_filename: random_forest_model.pkl
         model.random_forest:
           n_estimators: 100
           random_state: 42
@@ -77,19 +79,11 @@ stages:
         training.target_column: Burnout_Risk
         training.test_size: 0.3
     outs:
-    - path: metrics/DT_results.json
-      hash: md5
-      md5: 1e5721ee9bf89cf086cdfec3567be543
-      size: 102
     - path: metrics/RF_results.json
       hash: md5
       md5: 22d13dc7d2d4c37dd096ef563b24e617
       size: 102
-    - path: models/decision_tree_model.pkl
-      hash: md5
-      md5: afdf37d1d88966b30433f0344a8baa04
-      size: 3697
     - path: models/random_forest_model.pkl
       hash: md5
-      md5: 8b9a015df7da8a15b4ce663aabea3dbe
-      size: 2267953
+      md5: 609126b7a46c33fd5afb28653e403118
+      size: 2268161

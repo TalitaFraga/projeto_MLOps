@@ -1,16 +1,21 @@
 services:
-  mlflow:
+  pipeline:
     build:
       context: .
-      dockerfile: Dockerfile.mlflow
-    container_name: mlflow_server
-    ports:
-      - "5000:5000"
+      dockerfile: Dockerfile
+    container_name: mlops_pipeline
+    env_file:
+      - .env
     volumes:
-      - ./mlflow_data:/mlflow
+      - .:/app
     command: >
-      mlflow server
-      --backend-store-uri sqlite:///mlflow/mlflow.db
-      --default-artifact-root /mlflow/artifacts
-      --host 0.0.0.0
-      --port 5000
+      sh -c "
+      dvc remote add -d -f dagshub $${DAGSHUB_REPO_URL}.dvc &&
+
+      dvc remote modify dagshub auth basic --local &&
+      dvc remote modify dagshub user $${DAGSHUB_USERNAME} --local &&
+      dvc remote modify dagshub password $${DAGSHUB_TOKEN} --local &&
+
+      dvc repro &&
+      dvc push
+      "

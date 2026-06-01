@@ -30,10 +30,11 @@ stages:
       - training.test_size
       - training.random_state
       - model.random_forest
-      - model.decision_tree
+      - artifacts.model_dir
+      - artifacts.model_filename
+      - artifacts.metrics_dir
+      - artifacts.metrics_filename
     outs:
       - models/random_forest_model.pkl
-      - models/decision_tree_model.pkl
     metrics:
       - metrics/RF_results.json
-      - metrics/DT_results.json

@@ -6,6 +6,7 @@ import mlflow
 from dotenv import load_dotenv
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+import mlflow.sklearn
 
 from src.Train.preprocess import prepare_data
 from src.config import BASE_DIR, get_param
@@ -129,6 +130,18 @@ def train_random_forest(
 
         save_metrics(metrics_path, results)
         log_model_artifacts(model_path, metrics_path)
+
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path="champion-model",
+            registered_model_name="champion-model",
+        )
+
+        feature_names_path = metrics_dir / "feature_names.json"
+        with open(feature_names_path, "w", encoding="utf-8") as file:
+            json.dump(data_info["feature_names"], file, indent=4, ensure_ascii=False)
+
+        mlflow.log_artifact(str(feature_names_path), artifact_path="metadata")
 
         print("Random Forest training completed.")
         print(f"Model saved at: {model_path}")

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gen Z Burnout Prediction</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card form-card">
+      <div class="header">
+        <p class="tag">MLOps + MLflow</p>
+        <h1>Predição de Risco de Burnout</h1>
+        <p>
+          Preencha os dados abaixo. Os campos categóricos são selecionados por dropdown
+          e convertidos automaticamente para o formato esperado pelo modelo.
+        </p>
+      </div>
+
+      <form id="predictForm" class="form">
+        <div class="grid">
+          <div class="field">
+            <label for="Age">Idade</label>
+            <input id="Age" name="Age" type="number" step="1" value="24" required />
+          </div>
+
+          <div class="field">
+            <label for="Gender">Gênero</label>
+            <div class="select-wrapper">
+              <select id="Gender" name="Gender" required>
+                <option value="Male" selected>Masculino</option>
+                <option value="Female">Feminino</option>
+                <option value="Non-binary">Não-binário</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="Student_Working_Status">Status</label>
+            <div class="select-wrapper">
+              <select id="Student_Working_Status" name="Student_Working_Status" required>
+                <option value="Student">Estudante</option>
+                <option value="Working" selected>Trabalhando</option>
+                <option value="Both">Estuda e trabalha</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="Content_Type_Preference">Tipo de conteúdo preferido</label>
+            <div class="select-wrapper">
+              <select id="Content_Type_Preference" name="Content_Type_Preference" required>
+                <option value="Educational">Educacional</option>
+                <option value="Entertainment">Entretenimento</option>
+                <option value="Gaming">Jogos</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="News" selected>Notícias</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="Daily_Social_Media_Hours">Horas diárias em redes sociais</label>
+            <input id="Daily_Social_Media_Hours" type="number" step="0.01" value="4.81" required />
+          </div>
+
+          <div class="field">
+            <label for="Screen_Time_Hours">Horas de tela</label>
+            <input id="Screen_Time_Hours" type="number" step="0.01" value="6.93" required />
+          </div>
+
+          <div class="field">
+            <label for="Night_Scrolling_Frequency">Frequência de rolagem noturna</label>
+            <input id="Night_Scrolling_Frequency" type="number" step="0.01" value="2.61" required />
+          </div>
+
+          <div class="field">
+            <label for="Online_Gaming_Hours">Horas em jogos online</label>
+            <input id="Online_Gaming_Hours" type="number" step="0.01" value="2.07" required />
+          </div>
+
+          <div class="field">
+            <label for="Exercise_Frequency_per_Week">Frequência de exercícios por semana</label>
+            <input id="Exercise_Frequency_per_Week" type="number" step="0.01" value="5.41" required />
+          </div>
+
+          <div class="field">
+            <label for="Daily_Sleep_Hours">Horas diárias de sono</label>
+            <input id="Daily_Sleep_Hours" type="number" step="0.01" value="6.84" required />
+          </div>
+
+          <div class="field">
+            <label for="Caffeine_Intake_Cups">Xícaras de cafeína</label>
+            <input id="Caffeine_Intake_Cups" type="number" step="0.01" value="1.52" required />
+          </div>
+
+          <div class="field">
+            <label for="Study_Work_Hours_per_Day">Horas de estudo/trabalho por dia</label>
+            <input id="Study_Work_Hours_per_Day" type="number" step="0.01" value="11.42" required />
+          </div>
+
+          <div class="field">
+            <label for="Overthinking_Score">Score de overthinking</label>
+            <input id="Overthinking_Score" type="number" step="0.01" value="4.95" required />
+          </div>
+
+          <div class="field">
+            <label for="Anxiety_Score">Score de ansiedade</label>
+            <input id="Anxiety_Score" type="number" step="0.01" value="4.13" required />
+          </div>
+
+          <div class="field">
+            <label for="Mood_Stability_Score">Score de estabilidade de humor</label>
+            <input id="Mood_Stability_Score" type="number" step="0.01" value="5.74" required />
+          </div>
+
+          <div class="field">
+            <label for="Social_Comparison_Index">Índice de comparação social</label>
+            <input id="Social_Comparison_Index" type="number" step="0.01" value="4.67" required />
+          </div>
+
+          <div class="field">
+            <label for="Sleep_Quality_Score">Score de qualidade do sono</label>
+            <input id="Sleep_Quality_Score" type="number" step="0.01" value="6.27" required />
+          </div>
+
+          <div class="field">
+            <label for="Motivation_Level">Nível de motivação</label>
+            <input id="Motivation_Level" type="number" step="0.01" value="6.13" required />
+          </div>
+
+          <div class="field">
+            <label for="Emotional_Fatigue_Score">Score de fadiga emocional</label>
+            <input id="Emotional_Fatigue_Score" type="number" step="0.01" value="6.45" required />
+          </div>
+
+          <div class="field">
+            <label for="Wellbeing_Index">Índice de bem-estar</label>
+            <input id="Wellbeing_Index" type="number" step="0.01" value="4.28" required />
+          </div>
+        </div>
+
+        <div class="json-box">
+          <div class="json-header">
+            <h2>JSON enviado</h2>
+            <button type="button" id="copyJsonButton">Copiar JSON</button>
+          </div>
+
+          <textarea id="jsonPreview" rows="16"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="updateJsonButton" class="secondary">
+            Atualizar JSON
+          </button>
+
+          <button type="submit" class="primary">
+            Fazer predição
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card result-card" id="predictionResult">
+      <div class="result-header">
+        <div>
+          <p class="tag">Resultado da API</p>
+          <h2>Predição</h2>
+        </div>
+      </div>
+
+      <div id="status" class="status">
+        Aguardando predição...
+      </div>
+
+      <pre id="result"></pre>
+    </section>
+  </main>
+
+  <script src="/static/script.js?v=2"></script>
+</body>
+</html>
